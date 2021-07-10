@@ -1,6 +1,9 @@
 ﻿@page "/add"
+@using Microsoft.AspNetCore.Components
+@using MonthlyPremium.Data
+@using MonthlyPremiumModel
 
-<h1>Counter</h1>
+@*<h1>Counter</h1>
 
 <p>Current count: @currentCount</p>
 
@@ -12,5 +15,114 @@
     private void IncrementCount()
     {
         currentCount++;
+    }
+}*@
+
+
+
+
+
+
+
+<h1>Monthly Premium Calculator</h1>
+
+<EditForm Model="@_mpm" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    
+    <table>
+        <tr>
+            <td>
+                <label for="name">Name: </label>
+            </td>
+            <td>
+                <InputText id="name" @bind-Value="_mpm.Name" />
+            </td>
+            <td>
+                <ValidationMessage For="() => _mpm.Name" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="dob">Date Of Birth: </label>
+            </td>
+            <td>
+                <InputDate id="dob" @bind-Value="_mpm.DateOfBirth" DisplayName="Date Of Birth" />
+            </td>
+            <td>
+                <ValidationMessage For="() => _mpm.DateOfBirth" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="age">Your Age is: </label>
+            </td>
+            <td>
+                <input type="number" id="age" disabled="disabled" value="@_age" />
+            </td>
+            <td>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="occupation">Occupation: </label>
+            </td>
+            <td>
+                <InputSelect id="occupation" @bind-Value="_mpm.Occupation">
+                    <option value="">Select Occupation ...</option>
+                    <option value="whitecollar">Author</option>
+                    <option value="lightmanual">Cleaner</option>
+                    <option value="professional">Doctor</option>
+                    <option value="heavymanual">Farmer</option>
+                    <option value="lightmanual">Florist</option>
+                    <option value="heavymanual">Mechanic</option>
+                </InputSelect>
+            </td>
+            <td>
+                <ValidationMessage For="() => _mpm.Occupation" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="amount">Sum Insured $: </label>
+            </td>
+            <td>
+                <InputNumber id="amount" @bind-Value="_mpm.CoverAmount" />
+            </td>
+            <td>
+                <ValidationMessage For="() => _mpm.CoverAmount" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+
+    </table>
+</EditForm>
+
+<h2>Your calculated monthly premium amount is: @_monthlyPremium</h2>
+
+@code {
+    private readonly MonthlyPremiumModel _mpm = new MonthlyPremiumModel();
+    private uint _age = 0;
+    private decimal _monthlyPremium = 0.00M;
+
+    private void HandleValidSubmit()
+    {
+        CalculateAge();
+
+        _monthlyPremium = new PremiumCore().DeathPremium(_mpm.Occupation, _age, _mpm.CoverAmount);
+    }
+
+    private void CalculateAge()
+    {
+        _age = Convert.ToUInt16(DateTime.Now.Year - _mpm.DateOfBirth.Year);
     }
 }
