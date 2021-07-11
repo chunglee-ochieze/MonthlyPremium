@@ -1,0 +1,114 @@
+﻿@page "/add"
+@using Microsoft.AspNetCore.Components
+@using MonthlyPremium.Data
+@using MonthlyPremiumModel
+
+<h1>Monthly Premium Calculator</h1>
+
+<EditForm Model="@_user" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    
+    <table>
+        <tr>
+            <td>
+                <label for="name">Name: </label>
+            </td>
+            <td>
+                <InputText id="name" @bind-Value="_user.Name" />
+            </td>
+            <td>
+                <ValidationMessage For="() => _user.Name" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="dob">Date Of Birth: </label>
+            </td>
+            <td>
+                <InputDate id="dob" @bind-Value="_user.DateOfBirth" />
+            </td>
+            <td>
+                <ValidationMessage For="() => _user.DateOfBirth" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="age">Your Age (Years): </label>
+            </td>
+            <td>
+                <input type="number" id="age" disabled="disabled" value="@_user.Age.ToString("F")" />
+            </td>
+            <td>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="occupation">Occupation: </label>
+            </td>
+            <td>
+                <InputSelect id="occupation" @bind-Value="_user.OccupationRating">
+                    <option value="">Select Your Occupation...</option>
+                    <option value="White Collar">Author</option>
+                    <option value="Light Manual">Cleaner</option>
+                    <option value="Professional">Doctor</option>
+                    <option value="Heavy Manual">Farmer</option>
+                    <option value="Light Manual">Florist</option>
+                    <option value="Heavy Manual">Mechanic</option>
+                </InputSelect>
+            </td>
+            <td>
+                <ValidationMessage For="() => _user.OccupationRating" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="amount">Sum Insured ($): </label>
+            </td>
+            <td>
+                <InputNumber id="amount" @bind-Value="_user.CoverAmount" />
+            </td>
+            <td>
+                <ValidationMessage For="() => _user.CoverAmount" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <br/>
+            </td>
+            <td colspan="2">
+                <br/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+            </td>
+            <td colspan="2">
+                <button type="submit">Calculate & Save Premium</button>
+            </td>
+        </tr>
+
+    </table>
+</EditForm>
+<p></p>
+<h3>@_message@_monthlyPremium.ToString("##,###.##")</h3>
+
+@code {
+    private readonly UserDataModel _user = new ();
+    private double _monthlyPremium;
+    private string _message;
+
+    private void HandleValidSubmit()
+    {
+        _monthlyPremium = new PremiumCore().CalculatePremium(_user);
+
+        if (_monthlyPremium > 0)
+            _message = "Your calculated monthly premium amount is: $";
+    }
+}

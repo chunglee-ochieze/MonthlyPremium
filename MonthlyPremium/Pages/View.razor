@@ -1,0 +1,51 @@
+﻿@page "/view"
+
+@using MonthlyPremium.Data
+@using MonthlyPremiumModel
+@inject PremiumCore _premiumCore
+
+<h1>Monthly Premium Viewer</h1>
+
+<p>These are all the successfully-calculated Monthly Premium entries made.</p>
+
+@if (!_userData.Any())
+{
+    <p><em>Please <a href="add">click here</a> to first make Monthly Premium entries...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Age (Years)</th>
+                <th>Occupation Rating</th>
+                <th>Cover Amount ($)</th>
+                <th>Monthly Premium ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in _userData)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.DateOfBirth.ToShortDateString()</td>
+                    <td>@user.Age.ToString("F")</td>
+                    <td>@user.OccupationRating</td>
+                    <td>@user.CoverAmount.ToString("##,###.##")</td>
+                    <td>@user.MonthlyPremium.ToString("##,###.##")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<UserDataModel> _userData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _userData = await _premiumCore.ViewPremiums();
+    }
+}
