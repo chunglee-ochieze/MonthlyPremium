@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonthlyPremium.Data.Tests
+namespace SolutionTests
 {
     [TestClass]
     public class PremiumCoreTests
     {
         [TestMethod]
-        public void DeathPremiumTest()
+        public void CalculateSavePremiumTest()
         {
             var mpm = new UserDataModel
             {
@@ -24,6 +24,21 @@ namespace MonthlyPremium.Data.Tests
             var premium = new PremiumCore().CalculateSavePremium(mpm);
 
             Assert.AreNotEqual(0, premium);
+        }
+    }
+
+    [TestClass]
+    public class UserDataModelTests
+    {
+        [TestMethod]
+        public void AgeCalculationTest()
+        {
+            var user = new UserDataModel
+            {
+                DateOfBirth = new DateTime(2020, 07, 11) //1 year ago
+            };
+
+            Assert.AreEqual(1, Math.Round(user.Age, MidpointRounding.AwayFromZero));
         }
     }
 }

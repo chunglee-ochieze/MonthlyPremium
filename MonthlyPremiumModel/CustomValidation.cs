@@ -16,7 +16,6 @@ namespace MonthlyPremiumModel
             {
                 return Convert.ToDateTime(value) switch
                 {
-                    var n when n == DateTime.MinValue.Date => new ValidationResult($"Incorrect {validationContext.DisplayName}."),
                     var n when n <= DateTime.Now.Date => ValidationResult.Success,
                     _ => new ValidationResult($"Incorrect {validationContext.DisplayName}.")
                 };
