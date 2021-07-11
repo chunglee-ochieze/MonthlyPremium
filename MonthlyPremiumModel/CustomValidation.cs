@@ -10,6 +10,12 @@ namespace MonthlyPremiumModel
 {
     public class ValidDateAttribute : ValidationAttribute
     {
+        /// <summary>
+        /// A function for validating Date of Birth.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="validationContext"></param>
+        /// <returns>Validation Result</returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             try
@@ -29,6 +35,12 @@ namespace MonthlyPremiumModel
 
     public class ValidAmountAttribute : ValidDateAttribute
     {
+        /// <summary>
+        /// A function for validating Amount.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="validationContext"></param>
+        /// <returns>Validation Result</returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             try

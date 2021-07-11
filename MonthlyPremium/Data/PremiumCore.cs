@@ -21,6 +21,11 @@ namespace MonthlyPremium.Data
             _configMgr = new ConfigMgr();
         }
 
+        /// <summary>
+        /// A function that calculates monthly premium based on rating factors and formula.
+        /// </summary>
+        /// <param name="user">An object parameter containing user details</param>
+        /// <returns>Result of the calculation</returns>
         public double CalculatePremium(UserDataModel user)
         {
             var premium = 0D;
@@ -48,6 +53,11 @@ namespace MonthlyPremium.Data
             return premium;
         }
 
+        /// <summary>
+        /// A function that persists a user data.
+        /// </summary>
+        /// <param name="data">A string parameter containing user details</param>
+        /// <returns></returns>
         public async Task SavePremium(string data)
         {
             try
@@ -60,6 +70,10 @@ namespace MonthlyPremium.Data
             }
         }
 
+        /// <summary>
+        /// A function that retrieves details of all previously-calculated premiums.
+        /// </summary>
+        /// <returns>List of user details</returns>
         public async Task<List<UserDataModel>> ViewPremiums()
         {
             List<UserDataModel> userData;

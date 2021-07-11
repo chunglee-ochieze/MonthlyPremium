@@ -14,6 +14,9 @@ namespace SolutionTests
     [TestClass]
     public class PremiumCoreTests
     {
+        /// <summary>
+        /// Testing to confirm that CalculatePremium function does return a non-zero response, indicating that calculation was done.
+        /// </summary>
         [TestMethod]
         public void CalculateSavePremiumTest()
         {
@@ -29,6 +32,10 @@ namespace SolutionTests
             Assert.AreNotEqual(0, premium);
         }
 
+        /// <summary>
+        /// Testing to confirm that SavePremium function does save data.
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task SavePremiumTest()
         {
@@ -41,6 +48,10 @@ namespace SolutionTests
             Assert.IsTrue(fileContent.Contains(test));
         }
 
+        /// <summary>
+        /// Testing to confirm that ViewPremiums function does return data.
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task ViewPremiumsTest()
         {
@@ -55,6 +66,9 @@ namespace SolutionTests
     [TestClass]
     public class UserDataModelTests
     {
+        /// <summary>
+        /// Testing to confirm that UserDataModel class does calculate Age appropriately, based on Date of Birth property
+        /// </summary>
         [TestMethod]
         public void AgeCalculationTest()
         {
@@ -77,6 +91,9 @@ namespace SolutionTests
             DataFile = new ConfigMgr().DataFile();
         }
 
+        /// <summary>
+        /// Testing to confirm that prepared data file is empty and not holding data from previous sessions.
+        /// </summary>
         [TestMethod]
         public void PrepareDataFileTest()
         {
@@ -89,6 +106,10 @@ namespace SolutionTests
             Assert.AreEqual(0, fileSize);
         }
 
+        /// <summary>
+        /// Testing to confirm that data written into data file is retrievable and intact.
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task WriteDataToFileTestAsync()
         {
@@ -101,6 +122,10 @@ namespace SolutionTests
             Assert.IsTrue(fileContent.Contains(test));
         }
 
+        /// <summary>
+        /// Testing to confirm that data can be retrieved from data file in desired format.
+        /// </summary>
+        /// <returns></returns>
         [TestMethod]
         public async Task ReadDataFromFileTestAsync()
         {

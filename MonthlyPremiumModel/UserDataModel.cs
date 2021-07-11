@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MonthlyPremiumModel
 {
+    /// <summary>
+    /// Object model of the User data. Age gets calculated from Date of birth, upon object instantiation.
+    /// </summary>
     public class UserDataModel
     {
         [Required(ErrorMessage = "Name is required."), DataType(DataType.Text), RegularExpression("^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)", ErrorMessage = "First and Last Names required.")]

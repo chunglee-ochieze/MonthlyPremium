@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MonthlyPremium.Interface
 {
+    /// <summary>
+    /// Interface for further implementation.
+    /// </summary>
     interface IPremiumCore
     {
         double CalculatePremium(UserDataModel user);

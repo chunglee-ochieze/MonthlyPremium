@@ -51,6 +51,13 @@ namespace MonthlyPremiumUtilities
             Log(message, LogEventLevel.Debug, exception, caller);
         }
 
+        /// <summary>
+        /// A function for writing log entries.
+        /// </summary>
+        /// <param name="message">Log entry being made.</param>
+        /// <param name="logType">Log level of interest.</param>
+        /// <param name="exception">Exception object to be logged, if any.</param>
+        /// <param name="caller">Method name of the caller.</param>
         private void Log(string message, LogEventLevel logType, Exception exception = null, [CallerMemberName] string caller = null)
         {
             try

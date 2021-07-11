@@ -18,6 +18,9 @@ namespace MonthlyPremiumUtilities
             _dataFile = new ConfigMgr().DataFile();
         }
 
+        /// <summary>
+        /// A function that prepares the data file for persisting user details.
+        /// </summary>
         public void PrepareDataFile()
         {
             try
@@ -31,6 +34,11 @@ namespace MonthlyPremiumUtilities
             }
         }
 
+        /// <summary>
+        /// A function that commits user details into the data file.
+        /// </summary>
+        /// <param name="data">A string parameter containing user details</param>
+        /// <returns></returns>
         public async Task WriteDataToFile(string data)
         {
             try
@@ -46,6 +54,10 @@ namespace MonthlyPremiumUtilities
             }
         }
 
+        /// <summary>
+        /// A function that reads string data from data file.
+        /// </summary>
+        /// <returns>A list of strings</returns>
         public async Task<List<string>> ReadDataFromFile()
         {
             List<string> lines;
