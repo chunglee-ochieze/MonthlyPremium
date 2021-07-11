@@ -23,9 +23,11 @@ namespace MonthlyPremiumUtilities
         public Dictionary<string, double> RatingFactors() => new()
         {
             { "Professional", _conf.GetValue<double>("RatingFactors:Professional") },
-            { "WhiteCollar", _conf.GetValue<double>("RatingFactors:WhiteCollar") },
-            { "LightManual", _conf.GetValue<double>("RatingFactors:LightManual") },
-            { "HeavyManual", _conf.GetValue<double>("RatingFactors:HeavyManual") }
+            { "White Collar", _conf.GetValue<double>("RatingFactors:WhiteCollar") },
+            { "Light Manual", _conf.GetValue<double>("RatingFactors:LightManual") },
+            { "Heavy Manual", _conf.GetValue<double>("RatingFactors:HeavyManual") }
         };
+
+        public string DataFile() => _conf["DataFile"];
     }
 }

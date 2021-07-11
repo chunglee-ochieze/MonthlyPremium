@@ -3,27 +3,6 @@
 @using MonthlyPremium.Data
 @using MonthlyPremiumModel
 
-@*<h1>Counter</h1>
-
-<p>Current count: @currentCount</p>
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-}*@
-
-
-
-
-
-
-
 <h1>Monthly Premium Calculator</h1>
 
 <EditForm Model="@_user" OnValidSubmit="@HandleValidSubmit">
@@ -68,21 +47,21 @@
 
         <tr>
             <td>
-                <label for="occupation">Occupation: </label>
+                <label for="occupation">OccupationRating: </label>
             </td>
             <td>
-                <InputSelect id="occupation" @bind-Value="_user.Occupation">
-                    <option value="">Select Occupation...</option>
-                    <option value="WhiteCollar">Author</option>
-                    <option value="LightManual">Cleaner</option>
+                <InputSelect id="occupation" @bind-Value="_user.OccupationRating">
+                    <option value="">Select OccupationRating...</option>
+                    <option value="White Collar">Author</option>
+                    <option value="Light Manual">Cleaner</option>
                     <option value="Professional">Doctor</option>
-                    <option value="HeavyManual">Farmer</option>
-                    <option value="LightManual">Florist</option>
-                    <option value="HeavyManual">Mechanic</option>
+                    <option value="Heavy Manual">Farmer</option>
+                    <option value="Light Manual">Florist</option>
+                    <option value="Heavy Manual">Mechanic</option>
                 </InputSelect>
             </td>
             <td>
-                <ValidationMessage For="() => _user.Occupation" />
+                <ValidationMessage For="() => _user.OccupationRating" />
             </td>
         </tr>
 
@@ -127,7 +106,7 @@
 
     private void HandleValidSubmit()
     {
-        _monthlyPremium = new PremiumCore().CalculateSavePremium(_user);
+        _monthlyPremium = new PremiumCore().CalculatePremium(_user);
 
         if (_monthlyPremium > 0)
             _message = "Your calculated monthly premium amount is: $";

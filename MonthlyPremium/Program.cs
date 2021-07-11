@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MonthlyPremiumUtilities;
 
 namespace MonthlyPremium
 {
@@ -13,6 +14,8 @@ namespace MonthlyPremium
     {
         public static void Main(string[] args)
         {
+            new Persistence().PrepareDataFile();
+
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -19,8 +19,9 @@ namespace MonthlyPremiumModel
         [ValidDate]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "Occupation is required."), DataType(DataType.Text), RegularExpression("WhiteCollar|Professional|LightManual|HeavyManual", ErrorMessage = "Incorrect Occupation.")]
-        public string Occupation { get; set; }
+        [Required(ErrorMessage = "Occupation is required."), DataType(DataType.Text), RegularExpression("White Collar|Professional|Light Manual|Heavy Manual", ErrorMessage = "Incorrect Occupation.")]
+        [Display(Name = "Occupation")]
+        public string OccupationRating { get; set; }
 
         [Required(ErrorMessage = "Sum Insured is required."), DataType(DataType.Currency)]
         [Display(Name = "Sum Insured")]
@@ -28,5 +29,6 @@ namespace MonthlyPremiumModel
         public double CoverAmount { get; set; }
 
         public double Age => DateTime.Now.Subtract(DateOfBirth).TotalDays / 365.25;
+        public double MonthlyPremium { get; set; }
     }
 }

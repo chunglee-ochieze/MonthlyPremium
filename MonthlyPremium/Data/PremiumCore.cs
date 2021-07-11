@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MonthlyPremium.Data
 {
@@ -18,7 +19,7 @@ namespace MonthlyPremium.Data
             _configMgr = new ConfigMgr();
         }
 
-        public double CalculateSavePremium(UserDataModel user)
+        public double CalculatePremium(UserDataModel user)
         {
             var premium = 0D;
 
@@ -26,11 +27,15 @@ namespace MonthlyPremium.Data
             {
                 var ratingFactors = _configMgr.RatingFactors();
 
-                var ratingFactor = ratingFactors.FirstOrDefault(r => r.Key.ToLower().Equals(user.Occupation.ToLower())).Value;
+                var ratingFactor = ratingFactors.FirstOrDefault(r => r.Key.ToLower().Equals(user.OccupationRating.ToLower())).Value;
 
                 premium = ((user.CoverAmount * ratingFactor * user.Age) / 1000) * 12;
 
                 _logger.Information($"Monthly Premium successfully calculated: {premium}");
+
+                user.MonthlyPremium = premium;
+
+                _ = SavePremium(JsonConvert.SerializeObject(user));
             }
             catch (Exception ex)
             {
@@ -38,6 +43,18 @@ namespace MonthlyPremium.Data
             }
 
             return premium;
+        }
+
+        public async Task SavePremium(string data)
+        {
+            try
+            {
+                await new Persistence().WriteDataToFile(data);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Exception error occurred: {ex.Message}", ex);
+            }
         }
     }
 }

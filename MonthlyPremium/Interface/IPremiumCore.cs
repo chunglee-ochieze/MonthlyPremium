@@ -8,6 +8,7 @@ namespace MonthlyPremium.Interface
 {
     interface IPremiumCore
     {
-        double CalculateSavePremium(UserDataModel user);
+        double CalculatePremium(UserDataModel user);
+        Task SavePremium(string data);
     }
 }
