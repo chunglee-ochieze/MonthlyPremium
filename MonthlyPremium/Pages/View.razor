@@ -1,35 +1,40 @@
 ﻿@page "/view"
 
 @using MonthlyPremium.Data
-@inject WeatherForecastService ForecastService
+@using MonthlyPremiumModel
+@inject PremiumCore _premiumCore
 
-<h1>Weather forecast</h1>
+<h1>Monthly Premium Viewer</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<p>These are all the successfully-calculated Monthly Premium entries made.</p>
 
-@if (forecasts == null)
+@if (!_userData.Any())
 {
-    <p><em>Loading...</em></p>
+    <p><em>Please <a href="add">click here</a> to first make Monthly Premium entries...</em></p>
 }
 else
 {
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Name</th>
+                <th>Date of Birth</th>
+                <th>Age (Years)</th>
+                <th>Occupation Rating</th>
+                <th>Cover Amount ($)</th>
+                <th>Monthly Premium ($)</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var user in _userData)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@user.Name</td>
+                    <td>@user.DateOfBirth.ToShortDateString()</td>
+                    <td>@user.Age.ToString("F")</td>
+                    <td>@user.OccupationRating</td>
+                    <td>@user.CoverAmount.ToString("##,###.##")</td>
+                    <td>@user.MonthlyPremium.ToString("##,###.##")</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +42,10 @@ else
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private List<UserDataModel> _userData;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        _userData = await _premiumCore.ViewPremiums();
     }
 }

@@ -10,5 +10,6 @@ namespace MonthlyPremium.Interface
     {
         double CalculatePremium(UserDataModel user);
         Task SavePremium(string data);
+        Task<List<UserDataModel>> ViewPremiums();
     }
 }

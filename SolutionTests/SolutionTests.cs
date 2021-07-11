@@ -40,6 +40,16 @@ namespace SolutionTests
 
             Assert.IsTrue(fileContent.Contains(test));
         }
+
+        [TestMethod]
+        public async Task ViewPremiumsTest()
+        {
+            var premiums = await new PremiumCore().ViewPremiums();
+
+            Assert.AreEqual("ChungLee Ochieze", premiums.FirstOrDefault()?.Name);
+
+            Assert.AreEqual(3, premiums.Count);
+        }
     }
 
     [TestClass]
@@ -89,6 +99,14 @@ namespace SolutionTests
             var fileContent = await File.ReadAllTextAsync(DataFile);
 
             Assert.IsTrue(fileContent.Contains(test));
+        }
+
+        [TestMethod]
+        public async Task ReadDataFromFileTestAsync()
+        {
+            var lines = await new Persistence().ReadDataFromFile();
+
+            Assert.AreEqual(3, lines.Count);
         }
     }
 }

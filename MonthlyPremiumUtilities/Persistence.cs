@@ -45,5 +45,23 @@ namespace MonthlyPremiumUtilities
                 _logger.Error($"Exception error occurred: {ex.Message}", ex);
             }
         }
+
+        public async Task<List<string>> ReadDataFromFile()
+        {
+            List<string> lines;
+
+            try
+            {
+                using var fr = File.ReadAllLinesAsync(_dataFile);
+                lines = (await fr).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Exception error occurred: {ex.Message}", ex);
+                lines = null;
+            }
+
+            return lines;
+        }
     }
 }
