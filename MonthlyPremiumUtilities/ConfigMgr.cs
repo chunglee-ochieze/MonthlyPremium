@@ -21,10 +21,10 @@ namespace MonthlyPremiumUtilities
 
         public RatingFactorModel RatingFactor() => new()
         {
-            Professional = _conf.GetValue<decimal>("RatingFactor:Professional"),
-            WhiteCollar = _conf.GetValue<decimal>("RatingFactor:WhiteCollar"),
-            LightManual = _conf.GetValue<decimal>("RatingFactor:LightManual"),
-            HeavyManual = _conf.GetValue<decimal>("RatingFactor:HeavyManual")
+            Professional = _conf.GetValue<double>("RatingFactor:Professional"),
+            WhiteCollar = _conf.GetValue<double>("RatingFactor:WhiteCollar"),
+            LightManual = _conf.GetValue<double>("RatingFactor:LightManual"),
+            HeavyManual = _conf.GetValue<double>("RatingFactor:HeavyManual")
         };
     }
 }

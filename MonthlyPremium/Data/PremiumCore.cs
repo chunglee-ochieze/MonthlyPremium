@@ -17,9 +17,9 @@ namespace MonthlyPremium.Data
             _configMgr = new ConfigMgr();
         }
 
-        public decimal DeathPremium(string occupationRating, uint age, decimal coverAmount)
+        public double DeathPremium(string occupationRating, double age, double coverAmount)
         {
-            var premium = 0M;
+            var premium = 0D;
 
             try
             {

@@ -7,6 +7,6 @@ namespace MonthlyPremium.Interface
 {
     interface IPremiumCore
     {
-        decimal DeathPremium(string occupationRating, uint age, decimal coverAmount);
+        double DeathPremium(string occupationRating, double age, double coverAmount);
     }
 }

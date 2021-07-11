@@ -8,9 +8,9 @@ namespace MonthlyPremiumModel
 {
     public class RatingFactorModel
     {
-        public decimal Professional { get; set; }
-        public decimal WhiteCollar { get; set; }
-        public decimal LightManual { get; set; }
-        public decimal HeavyManual { get; set; }
+        public double Professional { get; set; }
+        public double WhiteCollar { get; set; }
+        public double LightManual { get; set; }
+        public double HeavyManual { get; set; }
     }
 }

@@ -48,7 +48,7 @@
                 <label for="dob">Date Of Birth: </label>
             </td>
             <td>
-                <InputDate id="dob" @bind-Value="_mpm.DateOfBirth" DisplayName="Date Of Birth" />
+                <InputDate id="dob" @bind-Value="_mpm.DateOfBirth" /> @*DisplayName="Date Of Birth"*@
             </td>
             <td>
                 <ValidationMessage For="() => _mpm.DateOfBirth" />
@@ -60,7 +60,7 @@
                 <label for="age">Your Age is: </label>
             </td>
             <td>
-                <input type="number" id="age" disabled="disabled" value="@_age" />
+                <input type="number" id="age" disabled="disabled" value="@_mpm.Age" />
             </td>
             <td>
             </td>
@@ -88,7 +88,7 @@
 
         <tr>
             <td>
-                <label for="amount">Sum Insured $: </label>
+                <label for="amount">Sum Insured ($): </label>
             </td>
             <td>
                 <InputNumber id="amount" @bind-Value="_mpm.CoverAmount" />
@@ -100,19 +100,19 @@
 
         <tr>
             <td colspan="3">
-                <button type="submit">Submit</button>
+                <button type="submit">Calculate & Save Premium</button>
             </td>
         </tr>
 
     </table>
 </EditForm>
-
-<h2>Your calculated monthly premium amount is: @_monthlyPremium</h2>
+<p></p>
+<h3>Your calculated monthly premium amount is: @_monthlyPremium</h3>
 
 @code {
     private readonly MonthlyPremiumModel _mpm = new MonthlyPremiumModel();
-    private uint _age = 0;
-    private decimal _monthlyPremium = 0.00M;
+    private double _age = 0.00;
+    private double _monthlyPremium = 0.00;
 
     private void HandleValidSubmit()
     {
@@ -123,6 +123,6 @@
 
     private void CalculateAge()
     {
-        _age = Convert.ToUInt16(DateTime.Now.Year - _mpm.DateOfBirth.Year);
+        _age = DateTime.Today.Subtract(_mpm.DateOfBirth).TotalDays / 365.25;
     }
 }
