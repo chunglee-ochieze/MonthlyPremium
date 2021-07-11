@@ -26,7 +26,7 @@
 
 <h1>Monthly Premium Calculator</h1>
 
-<EditForm Model="@_mpm" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@_user" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     
@@ -36,10 +36,10 @@
                 <label for="name">Name: </label>
             </td>
             <td>
-                <InputText id="name" @bind-Value="_mpm.Name" />
+                <InputText id="name" @bind-Value="_user.Name" />
             </td>
             <td>
-                <ValidationMessage For="() => _mpm.Name" />
+                <ValidationMessage For="() => _user.Name" />
             </td>
         </tr>
 
@@ -48,19 +48,19 @@
                 <label for="dob">Date Of Birth: </label>
             </td>
             <td>
-                <InputDate id="dob" @bind-Value="_mpm.DateOfBirth" /> @*DisplayName="Date Of Birth"*@
+                <InputDate id="dob" @bind-Value="_user.DateOfBirth" />
             </td>
             <td>
-                <ValidationMessage For="() => _mpm.DateOfBirth" />
+                <ValidationMessage For="() => _user.DateOfBirth" />
             </td>
         </tr>
 
         <tr>
             <td>
-                <label for="age">Your Age is: </label>
+                <label for="age">Your Age (Years): </label>
             </td>
             <td>
-                <input type="number" id="age" disabled="disabled" value="@_mpm.Age" />
+                <input type="number" id="age" disabled="disabled" value="@_user.Age.ToString("F")" />
             </td>
             <td>
             </td>
@@ -71,18 +71,18 @@
                 <label for="occupation">Occupation: </label>
             </td>
             <td>
-                <InputSelect id="occupation" @bind-Value="_mpm.Occupation">
+                <InputSelect id="occupation" @bind-Value="_user.Occupation">
                     <option value="">Select Occupation ...</option>
-                    <option value="whitecollar">Author</option>
-                    <option value="lightmanual">Cleaner</option>
-                    <option value="professional">Doctor</option>
-                    <option value="heavymanual">Farmer</option>
-                    <option value="lightmanual">Florist</option>
-                    <option value="heavymanual">Mechanic</option>
+                    <option value="WhiteCollar">Author</option>
+                    <option value="LightManual">Cleaner</option>
+                    <option value="Professional">Doctor</option>
+                    <option value="HeavyManual">Farmer</option>
+                    <option value="LightManual">Florist</option>
+                    <option value="HeavyManual">Mechanic</option>
                 </InputSelect>
             </td>
             <td>
-                <ValidationMessage For="() => _mpm.Occupation" />
+                <ValidationMessage For="() => _user.Occupation" />
             </td>
         </tr>
 
@@ -91,15 +91,26 @@
                 <label for="amount">Sum Insured ($): </label>
             </td>
             <td>
-                <InputNumber id="amount" @bind-Value="_mpm.CoverAmount" />
+                <InputNumber id="amount" @bind-Value="_user.CoverAmount" />
             </td>
             <td>
-                <ValidationMessage For="() => _mpm.CoverAmount" />
+                <ValidationMessage For="() => _user.CoverAmount" />
             </td>
         </tr>
 
         <tr>
-            <td colspan="3">
+            <td>
+                <br/>
+            </td>
+            <td colspan="2">
+                <br/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+            </td>
+            <td colspan="2">
                 <button type="submit">Calculate & Save Premium</button>
             </td>
         </tr>
@@ -107,22 +118,18 @@
     </table>
 </EditForm>
 <p></p>
-<h3>Your calculated monthly premium amount is: @_monthlyPremium</h3>
+<h3>@_message@_monthlyPremium.ToString("##,###.##")</h3>
 
 @code {
-    private readonly MonthlyPremiumModel _mpm = new MonthlyPremiumModel();
-    private double _age = 0.00;
-    private double _monthlyPremium = 0.00;
+    private readonly UserDataModel _user = new ();
+    private double _monthlyPremium;
+    private string _message;
 
     private void HandleValidSubmit()
     {
-        CalculateAge();
+        _monthlyPremium = new PremiumCore().CalculateSavePremium(_user);
 
-        _monthlyPremium = new PremiumCore().DeathPremium(_mpm.Occupation, _age, _mpm.CoverAmount);
-    }
-
-    private void CalculateAge()
-    {
-        _age = DateTime.Today.Subtract(_mpm.DateOfBirth).TotalDays / 365.25;
+        if (_monthlyPremium > 0)
+            _message = "Your calculated monthly premium amount is: $";
     }
 }

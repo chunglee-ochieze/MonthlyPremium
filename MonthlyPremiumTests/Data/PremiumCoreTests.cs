@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MonthlyPremium.Data;
+using MonthlyPremiumModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,13 @@ namespace MonthlyPremium.Data.Tests
         [TestMethod]
         public void DeathPremiumTest()
         {
-            var premium = new PremiumCore().DeathPremium("Professional", 40, 10000);
+            var mpm = new UserDataModel
+            {
+                Occupation = "Professional",
+                DateOfBirth = new DateTime(1975, 10, 1),
+                CoverAmount = 10000
+            };
+            var premium = new PremiumCore().CalculateSavePremium(mpm);
 
             Assert.AreNotEqual(0, premium);
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MonthlyPremiumModel
 {
-    public class MonthlyPremiumModel
+    public class UserDataModel
     {
         [Required(ErrorMessage = "Name is required."), DataType(DataType.Text), RegularExpression("^([a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)", ErrorMessage = "First and Last Names required.")]
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace MonthlyPremiumModel
         [ValidDate]
         public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "Occupation is required."), DataType(DataType.Text), RegularExpression("whitecollar|professional|lightmanual|heavymanual", ErrorMessage = "Incorrect Occupation.")]
+        [Required(ErrorMessage = "Occupation is required."), DataType(DataType.Text), RegularExpression("WhiteCollar|Professional|LightManual|HeavyManual", ErrorMessage = "Incorrect Occupation.")]
         public string Occupation { get; set; }
 
         [Required(ErrorMessage = "Sum Insured is required."), DataType(DataType.Currency)]
@@ -27,11 +27,6 @@ namespace MonthlyPremiumModel
         [ValidAmount]
         public double CoverAmount { get; set; }
 
-        public double Age { get; set; }
-
-        public MonthlyPremiumModel()
-        {
-            Age = DateTime.Now.Subtract(DateOfBirth).TotalDays / 365.25;
-        }
+        public double Age => DateTime.Now.Subtract(DateOfBirth).TotalDays / 365.25;
     }
 }

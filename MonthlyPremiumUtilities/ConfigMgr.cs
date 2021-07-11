@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using MonthlyPremiumModel;
@@ -19,12 +20,12 @@ namespace MonthlyPremiumUtilities
             LogSize = Convert.ToInt64(_conf["Logger:Size"]) * 1048576
         };
 
-        public RatingFactorModel RatingFactor() => new()
+        public Dictionary<string, double> RatingFactors() => new()
         {
-            Professional = _conf.GetValue<double>("RatingFactor:Professional"),
-            WhiteCollar = _conf.GetValue<double>("RatingFactor:WhiteCollar"),
-            LightManual = _conf.GetValue<double>("RatingFactor:LightManual"),
-            HeavyManual = _conf.GetValue<double>("RatingFactor:HeavyManual")
+            { "Professional", _conf.GetValue<double>("RatingFactors:Professional") },
+            { "WhiteCollar", _conf.GetValue<double>("RatingFactors:WhiteCollar") },
+            { "LightManual", _conf.GetValue<double>("RatingFactors:LightManual") },
+            { "HeavyManual", _conf.GetValue<double>("RatingFactors:HeavyManual") }
         };
     }
 }

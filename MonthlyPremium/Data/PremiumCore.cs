@@ -1,4 +1,5 @@
 ﻿using MonthlyPremium.Interface;
+using MonthlyPremiumModel;
 using MonthlyPremiumUtilities;
 using System;
 using System.Collections.Generic;
@@ -17,24 +18,17 @@ namespace MonthlyPremium.Data
             _configMgr = new ConfigMgr();
         }
 
-        public double DeathPremium(string occupationRating, double age, double coverAmount)
+        public double CalculateSavePremium(UserDataModel user)
         {
             var premium = 0D;
 
             try
             {
-                var ratingFactors = _configMgr.RatingFactor();
+                var ratingFactors = _configMgr.RatingFactors();
 
-                var ratingFactor = occupationRating.ToLower() switch
-                {
-                    "professional" => ratingFactors.Professional,
-                    "whitecollar" => ratingFactors.WhiteCollar,
-                    "lightmanual" => ratingFactors.LightManual,
-                    "heavymanual" => ratingFactors.HeavyManual,
-                    _ => throw new NotImplementedException($"OccupationRating {occupationRating} not implemented.")
-                };
+                var ratingFactor = ratingFactors.FirstOrDefault(r => r.Key.ToLower().Equals(user.Occupation.ToLower())).Value;
 
-                premium = ((coverAmount * ratingFactor * age) / 1000) * 12;
+                premium = ((user.CoverAmount * ratingFactor * user.Age) / 1000) * 12;
 
                 _logger.Information($"Monthly Premium successfully calculated: {premium}");
             }
