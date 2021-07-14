@@ -32,6 +32,9 @@ namespace MonthlyPremiumModel
         public double CoverAmount { get; set; }
 
         public double Age => DateTime.Now.Subtract(DateOfBirth).TotalDays / 365.25;
+        public string AgeString => DateOfBirth.Date < DateTime.Now.Date ? Age.ToString("F") : "";
         public double MonthlyPremium { get; set; }
     }
+
+    
 }
