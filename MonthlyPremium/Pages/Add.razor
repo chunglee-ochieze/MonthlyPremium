@@ -39,7 +39,7 @@
                 <label for="age">Your Age (Years): </label>
             </td>
             <td>
-                <input type="number" id="age" disabled="disabled" value="@_user.Age.ToString("F")" />
+                <input type="number" id="age" disabled="disabled" value="@_user.AgeString" placeholder="Your age will show here." />
             </td>
             <td>
             </td>
@@ -88,6 +88,7 @@
 
         <tr>
             <td>
+                <button type="reset">Start Over</button>
             </td>
             <td colspan="2">
                 <button type="submit">Calculate & Save Premium</button>
